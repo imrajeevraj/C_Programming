@@ -1,3 +1,5 @@
+// C Program to Read n Elements into an Array and Calculate Sum and Average
+
 #include <stdio.h>
 
 int main() {

@@ -2,7 +2,6 @@
 // By Rajeev Ranjan
 
 #include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
 
 // Function prototypes
@@ -10,16 +9,15 @@ double add(double a, double b);
 double subtract(double a, double b);
 double multiply(double a, double b);
 double divide(double a, double b);
-double power(double base, int exponent);     
-double factorial(int n);                  
-double square_root(double value);
-void clear_input_buffer();
+double power(double base, int exponent);
+double factorial(int n);
+double fibonacci(int n);
 
 // Main function
 int main() {
     int choice;
-    double num1, num2, result;
-    int int_num;
+    double num1, num2;
+    int int_num, n;
 
     while (1) {
         printf("\n=== Recursive Math Tool Box ===\n");
@@ -29,11 +27,10 @@ int main() {
         printf("4. Division\n");
         printf("5. Power (Recursive)\n");
         printf("6. Factorial (Recursive)\n");
-        printf("7. Square Root\n");
+        printf("7. Fibonacci Series (Recursive)\n");
         printf("8. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
-        clear_input_buffer();
 
         switch (choice) {
             case 1:
@@ -77,14 +74,19 @@ int main() {
                 else
                     printf("Result: %.0lf\n", factorial(int_num));
                 break;
-                
+
             case 7:
-                printf("Enter non-negative number: ");
-                scanf("%lf", &num1);
-                if (num1 < 0)
+                printf("Enter number of terms: ");
+                scanf("%d", &n);
+                if (n < 0) {
                     printf("Error: Invalid input!\n");
-                else
-                    printf("Result: %.6lf\n", square_root(num1));
+                } else {
+                    printf("Fibonacci Series: ");
+                    for (int i = 0; i < n; i++) {
+                        printf("%.0lf ", fibonacci(i));
+                    }
+                    printf("\n");
+                }
                 break;
 
             case 8:
@@ -99,16 +101,17 @@ int main() {
 }
 
 // Function definitions
-
 double add(double a, double b) { return a + b; }
 double subtract(double a, double b) { return a - b; }
 double multiply(double a, double b) { return a * b; }
 double divide(double a, double b) { return a / b; }
 
-// Recursive power function
+// Recursive power
 double power(double base, int exponent) {
     if (exponent == 0)
         return 1;
+    if (exponent < 0)
+        return 1 / power(base, -exponent);
     return base * power(base, exponent - 1);
 }
 
@@ -118,11 +121,12 @@ double factorial(int n) {
         return 1;
     return n * factorial(n - 1);
 }
-// Square root function
-double square_root(double value) {
-    return sqrt(value);
-}
 
-void clear_input_buffer() {
-    while (getchar() != '\n');
+// Recursive fibonacci
+double fibonacci(int n) {
+    if (n == 0)
+        return 0;
+    if (n == 1)
+        return 1;
+    return fibonacci(n - 1) + fibonacci(n - 2);
 }
